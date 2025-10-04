@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
-import { fetchUsers } from "../store/userSlice";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks/reduxHooks";
+import {
+    useAppDispatch,
+    useAppSelector,
+} from "../../../../app/hooks/reduxHooks";
+import { fetchUsers } from "../../Application/userSlice";
 
 const UserPage: React.FC = () => {
     const dispatch = useAppDispatch();
