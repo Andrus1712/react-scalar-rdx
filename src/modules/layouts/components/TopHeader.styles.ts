@@ -31,7 +31,7 @@ export const ItemUser = styled.div`
 `;
 
 export const BurgerButton = styled.button`
-  display: none;
+  display: block;
   background: none;
   border: none;
   font-size: 1.2rem;

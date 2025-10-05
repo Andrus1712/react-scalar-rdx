@@ -39,5 +39,25 @@
     "title": "Configuración de prueba",
     "showMenu": false,
     "key": "settings-show"
+  },
+  {
+    "id": 4,
+    "label": "Ordenes",
+    "to": "/orders",
+    "icon": "FaTools",
+    "order": 4,
+    "title": "Lista de ordenes",
+    "showMenu": true,
+    "key": "order-index"
+  },
+  {
+    "id": 4,
+    "label": "Crear Orden",
+    "to": "/orders/new",
+    "icon": "FaTools",
+    "order": 4,
+    "title": "Crear Orden",
+    "showMenu": false,
+    "key": "order-create"
   }
 ]

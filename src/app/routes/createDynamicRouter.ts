@@ -1,15 +1,17 @@
-import { createBrowserRouter, type RouteObject, Navigate } from "react-router";
+import { createBrowserRouter, type RouteObject } from "react-router";
 import { lazy, createElement } from "react";
 import { ROUTES } from "./routePaths";
 import AuthLayout from "../../modules/layouts/AuthLayout";
 import MainLayout from "../../modules/layouts/MainLayout";
 import ProtectedRoute from "../../modules/auth/presentation/components/ProtectedRoute";
 import type { MenuItem } from "../../modules/shared/domain/MenuItem";
+import CreateOrderPage from "../../modules/orders/presentation/pages/CreateOrderPage";
 
 const LoginPage = lazy(() => import("../../modules/auth/presentation/pages/LoginPage"));
 const UserPage = lazy(() => import("../../modules/users/presentation/pages/UserPage"));
 const DashboardPage = lazy(() => import("../../modules/dashboard/presentation/pages/DashboardPage"));
 const SettingsPage = lazy(() => import("../../modules/settings/presentation/pages/SettingsPage"));
+const OrderPage = lazy(() => import("../../modules/orders/presentation/pages/OrderPage"));
 
 
 const componentMap: Record<string, React.ComponentType> = {
@@ -17,6 +19,8 @@ const componentMap: Record<string, React.ComponentType> = {
     "dashboard-index": DashboardPage,
     "settings-index": SettingsPage,
     "settings-show": SettingsPage,
+    "order-index": OrderPage,
+    "order-create": CreateOrderPage,
 };
 
 export const createDynamicRouter = (menuItems: MenuItem[] = []) => {
@@ -29,11 +33,17 @@ export const createDynamicRouter = (menuItems: MenuItem[] = []) => {
                 indexItem = {
                     index: item.index,
                     element: createElement(componentMap[item.key]),
+                    handle: {
+                        ...item
+                    }
                 };
             }
             return {
                 path: item.to.replace('/', ''),
                 element: createElement(componentMap[item.key]),
+                handle: {
+                    ...item
+                }
             };
         });
 

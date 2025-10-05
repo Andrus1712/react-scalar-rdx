@@ -8,7 +8,7 @@ interface TopHeaderProps {
 
 const TopHeader = ({ onToggleSidebar }: TopHeaderProps) => {
     const theme = useTheme();
-    
+
     return (
         <Header>
             <BurgerButton onClick={onToggleSidebar}>

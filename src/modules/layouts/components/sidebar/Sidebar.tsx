@@ -6,13 +6,20 @@ import {
     SidebarHeader,
     SidebarItems,
 } from "./Sidebar.styles";
-import { FaUsers, FaSignOutAlt, FaChartBar, FaCog } from "react-icons/fa";
+import {
+    FaUsers,
+    FaSignOutAlt,
+    FaChartBar,
+    FaCog,
+    FaTools,
+} from "react-icons/fa";
 
 const iconMap: Record<string, JSX.Element> = {
     FaUsers: <FaUsers />,
     FaSignOutAlt: <FaSignOutAlt />,
     FaChartBar: <FaChartBar />,
     FaCog: <FaCog />,
+    FaTools: <FaTools />,
 };
 
 interface SidebarProps {

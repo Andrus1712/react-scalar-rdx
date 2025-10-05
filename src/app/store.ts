@@ -6,6 +6,7 @@ import userReducer from "../modules/users/application/userSlice";
 import menuUserSlice from "../modules/shared/application/menuUserSlice";
 import { userApi } from "../modules/shared/services/userApi";
 import { menuApi } from "../modules/shared/services/menuApi";
+import { ordersApi } from "../modules/orders/infrastructure/orderApi";
 
 
 const persistConfig: PersistConfig<any> = {
@@ -21,7 +22,8 @@ export const store = configureStore({
         users: userReducer,
         menuUser: menuUserSlice,
         [userApi.reducerPath]: userApi.reducer,
-        [menuApi.reducerPath]: menuApi.reducer
+        [menuApi.reducerPath]: menuApi.reducer,
+        [ordersApi.reducerPath]: ordersApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
@@ -31,7 +33,8 @@ export const store = configureStore({
             },
         }).concat([
             userApi.middleware,
-            menuApi.middleware
+            menuApi.middleware,
+            ordersApi.middleware
         ]),
 });
 
