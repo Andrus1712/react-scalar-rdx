@@ -4,5 +4,4 @@ export const ROUTES = {
     BASE: '/auth',
     LOGIN: '/auth/login',
   },
-  USERS: '/users',
 } as const;

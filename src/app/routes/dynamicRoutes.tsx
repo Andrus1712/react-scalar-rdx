@@ -1,41 +1,39 @@
-import { createBrowserRouter, type RouteObject } from "react-router";
-import { lazy } from "react";
-import AuthLayout from "../../modules/layouts/AuthLayout";
-import MainLayout from "../../modules/layouts/MainLayout";
-import ProtectedRoute from "../../modules/auth/presentation/components/ProtectedRoute";
-import { ROUTES } from "./routePaths";
+import { RouterProvider, createBrowserRouter } from "react-router";
+import { useEffect, useState } from "react";
+import { createDynamicRouter } from "./createDynamicRouter";
+import { useGetMenuByUserQuery } from "../../modules/shared/services/menuApi";
+import { LoadingSpinner } from "../../modules/shared/infrastructure/components/LoadingSpinner";
+import { useAppDispatch } from "../hooks/reduxHooks";
+import { setMenuUser } from "../../modules/shared/application/menuUserSlice";
 
-// Lazy load components for better performance
-const LoginPage = lazy(() => import("../../modules/auth/presentation/pages/LoginPage"));
-const UserPage = lazy(() => import("../../modules/users/presentation/pages/UserPage"));
+const DynamicRoutes = () => {
+    const { data: menuItems, isLoading } = useGetMenuByUserQuery();
+    const [dynamicRouter, setDynamicRouter] = useState<ReturnType<
+        typeof createBrowserRouter
+    > | null>(null);
 
-const routes: RouteObject[] = [
-  {
-    path: ROUTES.ROOT,
-    element: <ProtectedRoute />,
-    children: [
-      {
-        path: ROUTES.ROOT,
-        element: <MainLayout />,
-        children: [
-          {
-            path: ROUTES.USERS,
-            element: <UserPage />,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    path: ROUTES.AUTH.BASE,
-    element: <AuthLayout />,
-    children: [
-      {
-        path: "login",
-        element: <LoginPage />,
-      },
-    ],
-  },
-];
+    const dispatch = useAppDispatch();
 
-export const router = createBrowserRouter(routes);
+    useEffect(() => {
+        if (menuItems) {
+            const newRouter = createDynamicRouter(menuItems);
+
+            setDynamicRouter(newRouter);
+
+            dispatch(
+                setMenuUser({
+                    code: "user123",
+                    _token: "token123",
+                    menu: menuItems,
+                })
+            );
+        }
+    }, [menuItems, dispatch]);
+
+    if (isLoading) return <LoadingSpinner />;
+
+    if (!dynamicRouter) return <LoadingSpinner />;
+
+    return <RouterProvider router={dynamicRouter} />;
+};
+export default DynamicRoutes;

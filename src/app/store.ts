@@ -1,29 +1,27 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../modules/auth/application/authSlice";
 import { persistReducer, persistStore, type PersistConfig } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { userApi } from "../shared/services/userApi";
-import userReducer from "../modules/users/Application/userSlice";
+import userReducer from "../modules/users/application/userSlice";
+import menuUserSlice from "../modules/shared/application/menuUserSlice";
+import { userApi } from "../modules/shared/services/userApi";
+import { menuApi } from "../modules/shared/services/menuApi";
 
 
-const rootReducer = combineReducers({
-    auth: authReducer,
-    // otros reducers...
-});
-
-const persistConfig: PersistConfig<ReturnType<typeof rootReducer>> = {
-    key: "root",
+const persistConfig: PersistConfig<any> = {
+    key: "auth",
     storage,
-    whitelist: ["auth"]
 };
 
-const persistedAuthReducer = persistReducer(persistConfig, rootReducer);
+const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
     reducer: {
         auth: persistedAuthReducer,
         users: userReducer,
-        [userApi.reducerPath]: userApi.reducer
+        menuUser: menuUserSlice,
+        [userApi.reducerPath]: userApi.reducer,
+        [menuApi.reducerPath]: menuApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
@@ -32,7 +30,8 @@ export const store = configureStore({
                 ignoredPaths: ["_persist"],
             },
         }).concat([
-            userApi.middleware
+            userApi.middleware,
+            menuApi.middleware
         ]),
 });
 

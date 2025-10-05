@@ -1,24 +1,35 @@
-import { Link, Outlet } from "react-router";
+import { Outlet } from "react-router";
+import { useState } from "react";
+import {
+    Container,
+    Content,
+    Footer,
+    MainLayoutContainer,
+    Overlay,
+} from "./MainLayout.styles";
+import TopHeader from "./components/TopHeader";
+import Sidebar from "./components/sidebar/Sidebar";
 
 const MainLayout = () => {
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+    const closeSidebar = () => setSidebarOpen(false);
+
     return (
-        <div className="main-layout">
-            <header className="navbar">
-                <h1>🚀 Mi Proyecto</h1>
-                <nav>
-                    <Link to="/users">Usuarios</Link>
-                    <Link to="/auth/login">Salir</Link>
-                </nav>
-            </header>
-
-            <main className="content">
-                <Outlet /> {/* Aquí se renderizan las páginas hijas */}
-            </main>
-
-            <footer className="footer">
-                <p>© 2025 Mi Proyecto</p>
-            </footer>
-        </div>
+        <MainLayoutContainer $sidebarOpen={sidebarOpen}>
+            <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
+            <Container>
+                <TopHeader onToggleSidebar={toggleSidebar} />
+                <Content>
+                    <Outlet />
+                </Content>
+                <Footer>
+                    <p>© 2025 Mi Proyecto</p>
+                </Footer>
+            </Container>
+            <Overlay $isVisible={sidebarOpen} onClick={closeSidebar} />
+        </MainLayoutContainer>
     );
 };
 

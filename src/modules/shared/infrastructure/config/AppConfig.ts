@@ -1,6 +1,5 @@
-import { store, persistor } from "../../../app/store";
+import { persistor, store } from "../../../../app/store";
 import { theme } from "../../styles/theme";
-import { router } from "../../../app/routes/dynamicRoutes";
 
 export class AppConfig {
   static getStore() {
@@ -13,9 +12,5 @@ export class AppConfig {
 
   static getTheme() {
     return theme;
-  }
-
-  static getRouter() {
-    return router;
   }
 }
