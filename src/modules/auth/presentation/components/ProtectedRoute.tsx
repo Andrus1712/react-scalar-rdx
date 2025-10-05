@@ -3,7 +3,7 @@ import { useAppSelector } from "../../../../app/hooks/reduxHooks";
 import type { RootState } from "../../../../app/store";
 
 const ProtectedRoute = () => {
-    const user = useAppSelector((state: RootState) => state.auth.auth.isAuthenticated);
+    const user = useAppSelector((state: RootState) => state.auth.isAuthenticated);
 
     // si no hay usuario => redirige a login
     if (!user) {

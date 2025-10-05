@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1,
+    "label": "Usuarios",
+    "to": "/users",
+    "icon": "FaUsers",
+    "order": 2,
+    "title": "Lista de usarios",
+    "showMenu": true,
+    "key": "user-index"
+  },
+  {
+    "id": 2,
+    "label": "Dashboard",
+    "to": "/dashboard",
+    "icon": "FaChartBar",
+    "index": true,
+    "order": 1,
+    "title": "Dashboard",
+    "showMenu": true,
+    "key": "dashboard-index"
+  },
+  {
+    "id": 3,
+    "label": "Configuración",
+    "to": "/settings",
+    "icon": "FaCog",
+    "order": 3,
+    "title": "Configuración",
+    "showMenu": true,
+    "key": "settings-index"
+  },
+  {
+    "id": 3,
+    "label": "Configuración de prueba",
+    "to": "/settings/:config_id/test/:id",
+    "icon": "FaCog",
+    "order": 3,
+    "title": "Configuración de prueba",
+    "showMenu": false,
+    "key": "settings-show"
+  }
+]
